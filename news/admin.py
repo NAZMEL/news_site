@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import News
+from .models import News, Category
 
 
 @admin.register(News)
@@ -8,6 +8,7 @@ class NewsAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'title',
+        'category',
         'content',
         'created_at',
         'updated_at',
@@ -26,3 +27,27 @@ class NewsAdmin(admin.ModelAdmin):
         'title',
         'content'
     )
+
+    # edit it using check-boxes
+    list_editable = ('is_published', )
+
+    # create frame for filtering 
+    list_filter = (
+        'is_published',
+        'category'
+    )
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'title'
+    )
+
+    list_display_links = (
+        'id',
+        'title'
+    )
+
+    search_fields = ('title',  )
