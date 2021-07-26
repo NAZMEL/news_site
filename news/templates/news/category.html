@@ -1,8 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
 
 {% block title %} 
-    {{ title }}
+    {{ category.title }} :: {{ block.super }}
 {% endblock %} 
+
 
 {% block sidebar %} 
 <div class="col-md-3">
@@ -14,7 +15,8 @@
         {% endfor %}
     </div>
 </div>
-{% endblock sidebar %}
+{% endblock %} 
+
 
 {% block content %} 
 <div class="col-md-9">

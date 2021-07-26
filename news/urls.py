@@ -4,6 +4,7 @@ from .views import *
 
 
 urlpatterns = [
-    path('', index),      # call news/ (important)
+    path('', index, name = 'index'),      # call news/ (important)
+    path('category/<int:category_id>/', get_category, name = 'category'),
 
 ]
