@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import News, Category
 
@@ -20,7 +20,7 @@ def index(request):
 
 def get_category(request, category_id):
     '''
-    Gat news for for specific category
+    Gat news for specific category
     '''
     news = News.objects.filter(category_id = category_id)
     category = Category.objects.get(pk = category_id)
@@ -32,3 +32,15 @@ def get_category(request, category_id):
 
     return render(request,'news/category.html', context)
 
+
+def view_news(request, news_id):
+    '''
+    Get all information about news
+    '''
+    news_item = get_object_or_404(News, pk = news_id)
+    
+    context = {
+        'news_item': news_item
+    }
+
+    return render(request, 'news/view_news.html', context)

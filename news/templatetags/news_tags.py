@@ -14,7 +14,7 @@ def show_categories():
     categories = Category.objects.all()
     
     context = {
-        'cattegories': categories
+        'categories': categories
     }
 
     return context
