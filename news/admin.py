@@ -10,6 +10,7 @@ class NewsAdmin(admin.ModelAdmin):
         'title',
         'category',
         'content',
+        'views',
         'created_at',
         'updated_at',
         'is_published'
