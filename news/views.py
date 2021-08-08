@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import News, Category
-from .forms import NewsForm
+from .forms import NewsForm, UserRegisterForm, UserLoginForm
 from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib import messages
+from django.contrib.auth import login, logout
 
 class HomeNews(ListView):
     # template = news_list
@@ -91,6 +92,49 @@ class CreateNews(LoginRequiredMixin, CreateView):
     template_name = 'news/add_news.html'
     #success_url = reverse_lazy('index')
     login_url = '/admin/'
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Registration has been successful!')
+            return redirect('index')
+        else:
+            messages.error(request, 'Registration error!')
+    else:
+        form = UserRegisterForm()
+    
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'news/register.html', context)
+
+
+def user_login(request):
+    if request.method == 'POST':
+        form = UserLoginForm(data = request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('index')
+    else:
+        form = UserLoginForm()
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'news/login.html', context)
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')
+
 
 # for case where form connected with model
 # def add_news(request):
