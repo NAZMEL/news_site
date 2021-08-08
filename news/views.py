@@ -4,12 +4,14 @@ from .models import News, Category
 from .forms import NewsForm
 from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class HomeNews(ListView):
     # template = news_list
     model = News
     context_object_name = 'news'
+    paginate_by = 3
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -32,11 +34,13 @@ class HomeNews(ListView):
 
 #     return render(request, 'news/index.html', context = context)
 
+
 class NewsByCategory(ListView):
     # template = news_list
     model = News
     context_object_name = 'news'
     allow_empty = False             # don't show empty list
+    paginate_by = 3
 
     def get_queryset(self):
         return News.objects.filter(category_id = self.kwargs['category_id'], is_published = True)
@@ -81,11 +85,12 @@ class ViewNews(DetailView):
 #     return render(request, 'news/view_news.html', context)
 
 
-class CreateNews(CreateView):
+# loginRequiredMixin for acces only authenticated user
+class CreateNews(LoginRequiredMixin, CreateView):
     form_class = NewsForm
     template_name = 'news/add_news.html'
     #success_url = reverse_lazy('index')
-
+    login_url = '/admin/'
 
 # for case where form connected with model
 # def add_news(request):
