@@ -80,3 +80,6 @@ class UserLoginForm(AuthenticationForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
 
+class ContactForm(forms.Form):
+    subject = forms.CharField(label='Article', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    content = forms.CharField(label='Content', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5 }))
