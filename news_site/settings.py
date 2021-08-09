@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'news.apps.NewsConfig',
     'blog.apps.BlogConfig',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -147,3 +149,5 @@ EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'

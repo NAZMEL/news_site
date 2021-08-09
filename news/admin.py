@@ -1,9 +1,22 @@
 from django.contrib import admin
+from django.forms import widgets
 from .models import News, Category
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from django import forms
+
+
+class NewsAdminForm(forms.ModelForm):
+    content = forms.CharField(widget = CKEditorUploadingWidget())
+
+    class Meta:
+        model = News
+        fields = '__all__'
 
 
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
+    form = NewsAdminForm
+
     # it shows values we want to see in django.admin
     list_display = (
         'id',
@@ -52,3 +65,5 @@ class CategoryAdmin(admin.ModelAdmin):
     )
 
     search_fields = ('title',  )
+
+
